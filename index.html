@@ -3,119 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1 Year Special</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+<title>Shardex Special</title>
+<link href="https://fonts.googleapis.com/css2?family=WoI&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fff9b0; /* light yellow */
-    font-family: 'Comfortaa', cursive;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: #fff9b0; /* light yellow */
+  font-family: 'WoI', cursive;
+  overflow:hidden;
+  color: pink;
+}
 
-  /* Click Me Button */
-  #clickMeBtn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 24px;
-    font-family: 'Fredoka One', cursive;
-    font-weight: bold;
-    color: #000;
-    background: white;
-    border: 2px solid white;
-    border-radius: 15px;
-    padding: 12px 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: transform 0.2s;
-  }
-  #clickMeBtn:hover { transform: scale(1.05); }
-  #clickMeBtn img { width: 30px; height: 30px; }
+/* Initial Click Me Button */
+#clickMeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  color: pink;
+  background: white;
+  border: 2px solid white;
+  border-radius: 15px;
+  padding: 12px 20px;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+#clickMeBtn:hover {transform: scale(1.05);}
+#clickMeBtn img:first-child {order:1;} /* Bunny first */
+#clickMeBtn img:last-child {order:2;} /* Heart last */
+#clickMeBtn img {width:30px;height:30px;}
 
-  /* Page */
-  #page {
-    width: 85%;
-    max-width: 450px;
-    height: 60%;
-    background: #ffc88c; /* dark peach yellow */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    display: none;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    padding: 30px 20px;
-    text-align: center;
-    transition: transform 0.5s, opacity 0.5s;
-    color: #3b1f00;
-  }
+/* Page */
+#page {
+  width: 85%;
+  max-width:450px;
+  height:60%;
+  background:#fff9b0; /* light yellow */
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%) scale(0.8);
+  display:none;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  padding:30px 20px;
+  text-align:center;
+  transition: transform 0.5s, opacity 0.5s;
+}
 
-  #page h1, #page h2, #page h3 {
-    margin: 15px 0;
-    font-family: 'Fredoka One', cursive;
-  }
-  #page h1 { font-size: 28px; }
-  #page h2 { font-size: 24px; }
-  #page h3 { font-size: 20px; }
+#page div {margin:15px 0; cursor:pointer; font-size:24px; font-family:'WoI',cursive; color:pink;}
 
-  /* Inner Click Me button on page */
-  #innerBtn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 20px;
-    font-family: 'Fredoka One', cursive;
-    font-weight: bold;
-    color: #000;
-    background: white;
-    border: 2px solid white;
-    border-radius: 12px;
-    padding: 10px 16px;
-    cursor: pointer;
-    margin-top: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: transform 0.2s;
-  }
-  #innerBtn:hover { transform: scale(1.05); }
-  #innerBtn img { width: 25px; height: 25px; }
+#innerBtn {
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-size:20px;
+  font-weight:bold;
+  color:pink;
+  background:white;
+  border:2px solid white;
+  border-radius:12px;
+  padding:10px 16px;
+  cursor:pointer;
+  margin-top:15px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+#innerBtn:hover {transform: scale(1.05);}
+#innerBtn img:first-child {order:1;} /* Bunny first */
+#innerBtn img:last-child {order:2;} /* Heart last */
+#innerBtn img {width:25px;height:25px;}
 
-  /* Final Image */
-  #finalImage {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 80%;
-    max-width: 400px;
-    display: none;
-    transition: transform 2s ease, opacity 2s ease;
-    opacity: 0;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  }
+/* Final Image */
+#finalImage {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%) scale(0);
+  width:80%;
+  max-width:400px;
+  display:none;
+  transition: transform 2s ease, opacity 2s ease;
+  opacity:0;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
 
-  @media (max-width: 768px){
-    #clickMeBtn { font-size: 20px; padding: 10px 16px; }
-    #clickMeBtn img { width: 25px; height: 25px; }
-    #page { width: 90%; height: 50%; padding: 20px; }
-    #page h1 { font-size: 24px; }
-    #page h2 { font-size: 20px; }
-    #page h3 { font-size: 18px; }
-    #innerBtn { font-size: 18px; padding: 8px 14px; }
-    #innerBtn img { width: 20px; height: 20px; }
-    #finalImage { max-width: 300px; }
-  }
+/* Discord Button */
+#discordBtn {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-size:20px;
+  font-weight:bold;
+  color:pink;
+  background:white;
+  border:2px solid white;
+  border-radius:12px;
+  padding:10px 16px;
+  cursor:pointer;
+  position:absolute;
+  bottom:10%;
+  left:50%;
+  transform: translateX(-50%);
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+  font-family:'WoI',cursive;
+}
+#discordBtn img {width:25px;height:25px;}
+
+/* Hearts Animation */
+.heartAnim {
+  position:absolute;
+  width:20px;
+  height:20px;
+  pointer-events:none;
+  animation:floatUp 1.5s ease-in forwards;
+}
+@keyframes floatUp{
+  0% {transform: translateY(0) scale(1); opacity:1;}
+  100% {transform: translateY(-150px) scale(1.5); opacity:0;}
+}
+
+@media(max-width:768px){
+  #clickMeBtn{font-size:20px;padding:10px 16px;}
+  #clickMeBtn img{width:25px;height:25px;}
+  #page{width:90%;height:50%;padding:20px;}
+  #page div{font-size:20px;}
+  #innerBtn{font-size:18px;padding:8px 14px;}
+  #innerBtn img{width:20px;height:20px;}
+  #finalImage{max-width:300px;}
+  #discordBtn{font-size:18px;padding:8px 14px;}
+  #discordBtn img{width:20px;height:20px;}
+}
 </style>
 </head>
 <body>
 
-<!-- First Click Me Button -->
+<!-- Initial Click Me -->
 <div id="clickMeBtn">
   <img src="bunny.png" alt="Bunny">
   <img src="heart.png" alt="Heart">
@@ -124,9 +156,9 @@
 
 <!-- Page -->
 <div id="page">
-  <h1>1 Year Special</h1>
-  <h2>Shardex Legit</h2>
-  <h3>Click Me</h3>
+  <div id="line1">Shardex OP</div>
+  <div id="line2">Shardex Legit</div>
+  <div id="line3">Shardex OP</div>
   <div id="innerBtn">
     <img src="bunny.png" alt="Bunny">
     <img src="heart.png" alt="Heart">
@@ -137,27 +169,65 @@
 <!-- Final Image -->
 <img id="finalImage" src="1year.png" alt="1 Year">
 
+<!-- Discord Button -->
+<div id="discordBtn">
+  <img src="heart.png" alt="Heart">
+  Discord
+</div>
+
 <script>
 const clickMeBtn = document.getElementById('clickMeBtn');
 const page = document.getElementById('page');
 const innerBtn = document.getElementById('innerBtn');
 const finalImage = document.getElementById('finalImage');
+const discordBtn = document.getElementById('discordBtn');
 
-// Step 1: Click first button → show page with animation
-clickMeBtn.addEventListener('click', () => {
-  clickMeBtn.style.display = 'none';
-  page.style.display = 'block';
-  setTimeout(()=>{ page.style.transform = 'translate(-50%, -50%) scale(1)'; }, 50);
+const line1 = document.getElementById('line1');
+const line3 = document.getElementById('line3');
+
+// Initial Click Me → Page
+clickMeBtn.addEventListener('click',()=>{
+  clickMeBtn.style.display='none';
+  page.style.display='block';
+  setTimeout(()=>{page.style.transform='translate(-50%,-50%) scale(1)';},50);
 });
 
-// Step 2: Click inner button → 2 second animation → show final image
-innerBtn.addEventListener('click', () => {
-  page.style.display = 'none';
-  finalImage.style.display = 'block';
+// line1 and line3 click → 1s heart animation
+function popHeartAnimation(xOffset=0,yOffset=0){
+  const heart = document.createElement('img');
+  heart.src='heart.png';
+  heart.className='heartAnim';
+  heart.style.left = (window.innerWidth/2 + xOffset)+'px';
+  heart.style.top = (window.innerHeight/2 + yOffset)+'px';
+  document.body.appendChild(heart);
+  setTimeout(()=>document.body.removeChild(heart),1000);
+}
+line1.addEventListener('click',()=>{popHeartAnimation(-50,0);});
+line3.addEventListener('click',()=>{popHeartAnimation(50,0);});
+
+// Inner button → show final image
+innerBtn.addEventListener('click',()=>{
+  page.style.display='none';
+  finalImage.style.display='block';
   setTimeout(()=>{
-    finalImage.style.transform = 'translate(-50%, -50%) scale(1)';
-    finalImage.style.opacity = '1';
-  }, 50);
+    finalImage.style.transform='translate(-50%,-50%) scale(1)';
+    finalImage.style.opacity='1';
+  },50);
+});
+
+// Discord button → pop multiple hearts
+discordBtn.addEventListener('click',()=>{
+  for(let i=0;i<20;i++){
+    const h = document.createElement('img');
+    h.src='heart.png';
+    h.className='heartAnim';
+    h.style.left = Math.random()*window.innerWidth + 'px';
+    h.style.top = window.innerHeight + 'px';
+    h.style.animationDuration = 1+Math.random() + 's';
+    document.body.appendChild(h);
+    setTimeout(()=>document.body.removeChild(h),1500);
+  }
+  window.open('https://discord.gg/bQcNZuzEs7','_blank');
 });
 </script>
 
