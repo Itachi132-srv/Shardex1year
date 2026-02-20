@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Anvil-Paper</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff9b0; /* light yellow */
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  #anvil {
+    width: 100px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  #anvil:hover {
+    transform: scale(1.1);
+  }
+
+  #paper {
+    width: 150px;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.5s, opacity 0.5s;
+  }
+
+  #appear {
+    width: 200px;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+  }
+
+  /* Bunny hearts animation */
+  .heart {
+    position: absolute;
+    font-size: 20px;
+    color: pink;
+    animation: floatUp 2s ease-in forwards;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<img id="anvil" src="1year.png" alt="Anvil">
+<img id="paper" src="1year.png" alt="Paper">
+<img id="appear" src="1year.png" alt="Appear">
+
+<script>
+  const anvil = document.getElementById('anvil');
+  const paper = document.getElementById('paper');
+  const appear = document.getElementById('appear');
+  const body = document.body;
+
+  anvil.addEventListener('click', () => {
+    anvil.style.display = 'none';
+    paper.style.display = 'block';
+  });
+
+  paper.addEventListener('click', () => {
+    paper.style.display = 'none';
+    appear.style.display = 'block';
+    setTimeout(() => {
+      appear.style.transform = 'translate(-50%, -50%) scale(1)';
+      appear.style.opacity = '1';
+    }, 50);
+
+    // Bunny hearts
+    for(let i=0; i<15; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '💖';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.top = window.innerHeight + 'px';
+      heart.style.animationDuration = 2 + Math.random() * 2 + 's';
+      body.appendChild(heart);
+      setTimeout(() => body.removeChild(heart), 4000);
+    }
+  });
+</script>
+
+</body>
+</html>
