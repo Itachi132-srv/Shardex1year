@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shardex Special</title>
-<link href="https://fonts.googleapis.com/css2?family=WoI&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
 <style>
 body {
   margin: 0;
@@ -13,7 +13,7 @@ body {
   justify-content:center;
   align-items:center;
   background: #fff9b0; /* light yellow */
-  font-family: 'WoI', cursive;
+  font-family: 'Bubblegum Sans', cursive;
   overflow:hidden;
   color: pink;
 }
@@ -57,7 +57,7 @@ body {
   transition: transform 0.5s, opacity 0.5s;
 }
 
-#page div {margin:15px 0; cursor:pointer; font-size:24px; font-family:'WoI',cursive; color:pink;}
+#page div {margin:15px 0; cursor:pointer; font-size:24px; font-family:'Bubblegum Sans', cursive; color:pink;}
 
 #innerBtn {
   display: flex;
@@ -115,7 +115,8 @@ body {
   left:50%;
   transform: translateX(-50%);
   box-shadow:0 4px 8px rgba(0,0,0,0.2);
-  font-family:'WoI',cursive;
+  font-family:'Bubblegum Sans', cursive;
+  display:none; /* Initially hidden */
 }
 #discordBtn img {width:25px;height:25px;}
 
@@ -205,17 +206,18 @@ function popHeartAnimation(xOffset=0,yOffset=0){
 line1.addEventListener('click',()=>{popHeartAnimation(-50,0);});
 line3.addEventListener('click',()=>{popHeartAnimation(50,0);});
 
-// Inner button → show final image
+// Inner button → show final image and discord button
 innerBtn.addEventListener('click',()=>{
   page.style.display='none';
   finalImage.style.display='block';
   setTimeout(()=>{
     finalImage.style.transform='translate(-50%,-50%) scale(1)';
     finalImage.style.opacity='1';
+    discordBtn.style.display='flex'; // Show discord button now
   },50);
 });
 
-// Discord button → pop multiple hearts
+// Discord button → pop multiple hearts and open link
 discordBtn.addEventListener('click',()=>{
   for(let i=0;i<20;i++){
     const h = document.createElement('img');
