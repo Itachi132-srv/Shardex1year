@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Letter</title>
+<title>Interactive Heart Button</title>
 <style>
   body {
     margin: 0;
@@ -12,54 +12,89 @@
     justify-content: center;
     align-items: center;
     background: #fff9b0; /* light yellow */
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     overflow: hidden;
   }
 
-  /* 💌 Letter Icon */
-  #letter {
-    font-size: 50px; /* default desktop size */
+  /* Heart Button */
+  #heartBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    background: white;
+    border: 2px solid #ff4d6d;
+    border-radius: 12px;
+    padding: 12px 20px;
     cursor: pointer;
-    transition: transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
   }
 
-  #letter:hover {
-    transform: scale(1.2);
+  #heartBtn:hover {
+    transform: scale(1.1);
   }
 
-  /* Folded page */
-  #foldedPage {
-    width: 70%;
-    max-width: 300px;
-    display: none;
-    cursor: pointer;
+  #heartBtn img {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Page */
+  #page {
+    width: 80%;
+    max-width: 400px;
+    height: 60%;
+    background: white;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
-    background: white;
-    padding: 40px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    border-radius: 8px;
-    transition: transform 0.5s, opacity 0.5s;
+    display: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    padding-top: 50px;
     text-align: center;
+    transition: transform 0.5s, opacity 0.5s;
   }
 
-  /* Final opened image */
-  #openedImage {
-    width: 80%;
-    max-width: 400px;
-    display: none;
+  /* Print Button on Page */
+  #printBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+    background: white;
+    border: 2px solid #ff4d6d;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  #printBtn:hover { transform: scale(1.05); }
+  #printBtn img { width: 20px; height: 20px; }
+
+  /* Final image */
+  #finalImage {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.5s, opacity 0.5s;
+    width: 80%;
+    max-width: 400px;
+    display: none;
+    transition: transform 0.6s ease, opacity 0.6s ease;
     opacity: 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
   }
 
-  /* Hearts */
-  .heart {
+  /* Hearts animation */
+  .heartAnim {
     position: absolute;
     font-size: 20px;
     color: pink;
@@ -74,57 +109,71 @@
 
   /* Responsive */
   @media (max-width: 768px) {
-    #letter { font-size: 40px; }
-    #foldedPage { padding: 30px; max-width: 250px; }
-    #openedImage { max-width: 300px; }
+    #heartBtn { font-size: 20px; padding: 10px 16px; }
+    #heartBtn img { width: 25px; height: 25px; }
+    #page { width: 90%; height: 50%; padding-top: 40px; }
+    #printBtn { font-size: 16px; padding: 6px 10px; }
+    #printBtn img { width: 18px; height: 18px; }
+    #finalImage { max-width: 300px; }
   }
+
 </style>
 </head>
 <body>
 
-<!-- Letter -->
-<div id="letter">💌</div>
+<!-- Heart Button -->
+<div id="heartBtn">
+  <img src="heart.png" alt="Heart Icon">
+  Click Me
+</div>
 
-<!-- Folded Page -->
-<div id="foldedPage">Click to Open 🎁</div>
+<!-- Page -->
+<div id="page">
+  <div id="printBtn">
+    <img src="heart.png" alt="Heart Icon">
+    Print
+  </div>
+  <p>Your special page!</p>
+</div>
 
 <!-- Final Image -->
-<img id="openedImage" src="1year.png" alt="1 Year">
+<img id="finalImage" src="1year.png" alt="1 Year">
 
 <script>
-  const letter = document.getElementById('letter');
-  const foldedPage = document.getElementById('foldedPage');
-  const openedImage = document.getElementById('openedImage');
-  const body = document.body;
+const heartBtn = document.getElementById('heartBtn');
+const page = document.getElementById('page');
+const printBtn = document.getElementById('printBtn');
+const finalImage = document.getElementById('finalImage');
+const body = document.body;
 
-  // Step 1: Click Letter → Show folded page
-  letter.addEventListener('click', () => {
-    letter.style.display = 'none';
-    foldedPage.style.display = 'block';
-    setTimeout(() => foldedPage.style.transform = 'translate(-50%, -50%) scale(1)', 50);
-  });
+// Step 1: Click Heart Button → Show Page
+heartBtn.addEventListener('click', () => {
+  heartBtn.style.display = 'none';
+  page.style.display = 'block';
+  setTimeout(() => { page.style.transform = 'translate(-50%, -50%) scale(1)'; }, 50);
+});
 
-  // Step 2: Click Folded Page → Show final image + hearts
-  foldedPage.addEventListener('click', () => {
-    foldedPage.style.display = 'none';
-    openedImage.style.display = 'block';
-    setTimeout(() => {
-      openedImage.style.transform = 'translate(-50%, -50%) scale(1)';
-      openedImage.style.opacity = '1';
-    }, 50);
+// Step 2: Click Print Button → Show finalImage with animation + hearts
+printBtn.addEventListener('click', () => {
+  page.style.display = 'none';
+  finalImage.style.display = 'block';
+  setTimeout(() => {
+    finalImage.style.transform = 'translate(-50%, -50%) scale(1)';
+    finalImage.style.opacity = '1';
+  }, 50);
 
-    // Bunny hearts
-    for(let i=0; i<15; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.textContent = '💖';
-      heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.top = window.innerHeight + 'px';
-      heart.style.animationDuration = 2 + Math.random() * 2 + 's';
-      body.appendChild(heart);
-      setTimeout(() => body.removeChild(heart), 4000);
-    }
-  });
+  // Hearts
+  for(let i=0; i<20; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heartAnim';
+    heart.textContent = '💖';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.top = window.innerHeight + 'px';
+    heart.style.animationDuration = 2 + Math.random() * 2 + 's';
+    body.appendChild(heart);
+    setTimeout(() => body.removeChild(heart), 4000);
+  }
+});
 </script>
 
 </body>
