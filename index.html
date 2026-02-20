@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Anvil-Paper</title>
+<title>Interactive Letter</title>
 <style>
   body {
     margin: 0;
@@ -16,28 +16,39 @@
     overflow: hidden;
   }
 
-  #anvil {
-    width: 100px;
+  /* 💌 Letter Icon */
+  #letter {
+    font-size: 50px; /* default desktop size */
     cursor: pointer;
     transition: transform 0.3s;
   }
-  #anvil:hover {
-    transform: scale(1.1);
+
+  #letter:hover {
+    transform: scale(1.2);
   }
 
-  #paper {
-    width: 150px;
+  /* Folded page */
+  #foldedPage {
+    width: 70%;
+    max-width: 300px;
     display: none;
     cursor: pointer;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.8);
+    background: white;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-radius: 8px;
     transition: transform 0.5s, opacity 0.5s;
+    text-align: center;
   }
 
-  #appear {
-    width: 200px;
+  /* Final opened image */
+  #openedImage {
+    width: 80%;
+    max-width: 400px;
     display: none;
     position: absolute;
     top: 50%;
@@ -47,7 +58,7 @@
     opacity: 0;
   }
 
-  /* Bunny hearts animation */
+  /* Hearts */
   .heart {
     position: absolute;
     font-size: 20px;
@@ -60,31 +71,46 @@
     0% { transform: translateY(0) scale(1); opacity: 1; }
     100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
   }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    #letter { font-size: 40px; }
+    #foldedPage { padding: 30px; max-width: 250px; }
+    #openedImage { max-width: 300px; }
+  }
 </style>
 </head>
 <body>
 
-<img id="anvil" src="1year.png" alt="Anvil">
-<img id="paper" src="1year.png" alt="Paper">
-<img id="appear" src="1year.png" alt="Appear">
+<!-- Letter -->
+<div id="letter">💌</div>
+
+<!-- Folded Page -->
+<div id="foldedPage">Click to Open 🎁</div>
+
+<!-- Final Image -->
+<img id="openedImage" src="1year.png" alt="1 Year">
 
 <script>
-  const anvil = document.getElementById('anvil');
-  const paper = document.getElementById('paper');
-  const appear = document.getElementById('appear');
+  const letter = document.getElementById('letter');
+  const foldedPage = document.getElementById('foldedPage');
+  const openedImage = document.getElementById('openedImage');
   const body = document.body;
 
-  anvil.addEventListener('click', () => {
-    anvil.style.display = 'none';
-    paper.style.display = 'block';
+  // Step 1: Click Letter → Show folded page
+  letter.addEventListener('click', () => {
+    letter.style.display = 'none';
+    foldedPage.style.display = 'block';
+    setTimeout(() => foldedPage.style.transform = 'translate(-50%, -50%) scale(1)', 50);
   });
 
-  paper.addEventListener('click', () => {
-    paper.style.display = 'none';
-    appear.style.display = 'block';
+  // Step 2: Click Folded Page → Show final image + hearts
+  foldedPage.addEventListener('click', () => {
+    foldedPage.style.display = 'none';
+    openedImage.style.display = 'block';
     setTimeout(() => {
-      appear.style.transform = 'translate(-50%, -50%) scale(1)';
-      appear.style.opacity = '1';
+      openedImage.style.transform = 'translate(-50%, -50%) scale(1)';
+      openedImage.style.opacity = '1';
     }, 50);
 
     // Bunny hearts
