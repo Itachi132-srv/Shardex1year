@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Heart Button</title>
+<title>Interactive Print Animation</title>
 <style>
   body {
     margin: 0;
@@ -23,7 +23,7 @@
     gap: 10px;
     font-size: 24px;
     font-weight: bold;
-    background: white;
+    background: #fff;
     border: 2px solid #ff4d6d;
     border-radius: 12px;
     padding: 12px 20px;
@@ -32,14 +32,8 @@
     transition: transform 0.2s;
   }
 
-  #heartBtn:hover {
-    transform: scale(1.1);
-  }
-
-  #heartBtn img {
-    width: 30px;
-    height: 30px;
-  }
+  #heartBtn:hover { transform: scale(1.05); }
+  #heartBtn img { width: 30px; height: 30px; }
 
   /* Page */
   #page {
@@ -54,12 +48,10 @@
     display: none;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    padding-top: 50px;
-    text-align: center;
     transition: transform 0.5s, opacity 0.5s;
   }
 
-  /* Print Button on Page */
+  /* Print Button */
   #printBtn {
     position: absolute;
     top: 10px;
@@ -68,8 +60,9 @@
     align-items: center;
     gap: 5px;
     font-size: 18px;
-    background: white;
-    border: 2px solid #ff4d6d;
+    background: #4caf50;
+    color: white;
+    border: none;
     border-radius: 8px;
     padding: 8px 12px;
     cursor: pointer;
@@ -78,7 +71,39 @@
   #printBtn:hover { transform: scale(1.05); }
   #printBtn img { width: 20px; height: 20px; }
 
-  /* Final image */
+  /* Printer head (black bar) */
+  #printerHead {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    background: black;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 10;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  /* Printer dots */
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 6px;
+    background: red;
+  }
+  .dot.green { background: green; }
+
+  #printerDots {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Final Image */
   #finalImage {
     position: absolute;
     top: 50%;
@@ -89,34 +114,18 @@
     display: none;
     transition: transform 0.6s ease, opacity 0.6s ease;
     opacity: 0;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  }
-
-  /* Hearts animation */
-  .heartAnim {
-    position: absolute;
-    font-size: 20px;
-    color: pink;
-    animation: floatUp 2s ease-in forwards;
-    pointer-events: none;
-  }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
   }
 
   /* Responsive */
   @media (max-width: 768px) {
     #heartBtn { font-size: 20px; padding: 10px 16px; }
     #heartBtn img { width: 25px; height: 25px; }
-    #page { width: 90%; height: 50%; padding-top: 40px; }
+    #page { width: 90%; height: 50%; }
     #printBtn { font-size: 16px; padding: 6px 10px; }
     #printBtn img { width: 18px; height: 18px; }
     #finalImage { max-width: 300px; }
+    #printerHead { height: 30px; }
   }
-
 </style>
 </head>
 <body>
@@ -129,11 +138,19 @@
 
 <!-- Page -->
 <div id="page">
-  <div id="printBtn">
+  <button id="printBtn">
     <img src="heart.png" alt="Heart Icon">
     Print
+  </button>
+</div>
+
+<!-- Printer Head -->
+<div id="printerHead">
+  <div id="printerDots">
+    <span class="dot green"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
   </div>
-  <p>Your special page!</p>
 </div>
 
 <!-- Final Image -->
@@ -144,7 +161,7 @@ const heartBtn = document.getElementById('heartBtn');
 const page = document.getElementById('page');
 const printBtn = document.getElementById('printBtn');
 const finalImage = document.getElementById('finalImage');
-const body = document.body;
+const printerHead = document.getElementById('printerHead');
 
 // Step 1: Click Heart Button → Show Page
 heartBtn.addEventListener('click', () => {
@@ -153,26 +170,36 @@ heartBtn.addEventListener('click', () => {
   setTimeout(() => { page.style.transform = 'translate(-50%, -50%) scale(1)'; }, 50);
 });
 
-// Step 2: Click Print Button → Show finalImage with animation + hearts
+// Step 2: Click Print Button → Printer Animation
 printBtn.addEventListener('click', () => {
   page.style.display = 'none';
-  finalImage.style.display = 'block';
-  setTimeout(() => {
-    finalImage.style.transform = 'translate(-50%, -50%) scale(1)';
-    finalImage.style.opacity = '1';
-  }, 50);
+  printerHead.style.display = 'block';
+  printerHead.style.top = page.offsetTop + 'px';
 
-  // Hearts
-  for(let i=0; i<20; i++) {
-    const heart = document.createElement('div');
-    heart.className = 'heartAnim';
-    heart.textContent = '💖';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.top = window.innerHeight + 'px';
-    heart.style.animationDuration = 2 + Math.random() * 2 + 's';
-    body.appendChild(heart);
-    setTimeout(() => body.removeChild(heart), 4000);
+  const duration = 3000; // 3 seconds to cross page
+  const start = performance.now();
+
+  function animatePrinter(time) {
+    let elapsed = time - start;
+    let progress = elapsed / duration;
+    if(progress > 1) progress = 1;
+
+    // move printer head across page
+    printerHead.style.left = (progress * 100) + '%';
+
+    // gradually reveal final image
+    finalImage.style.display = 'block';
+    finalImage.style.opacity = progress;
+    finalImage.style.transform = `translate(-50%, -50%) scale(${progress})`;
+
+    if(progress < 1) {
+      requestAnimationFrame(animatePrinter);
+    } else {
+      printerHead.style.display = 'none';
+    }
   }
+
+  requestAnimationFrame(animatePrinter);
 });
 </script>
 
